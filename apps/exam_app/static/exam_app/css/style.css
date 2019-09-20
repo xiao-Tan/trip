@@ -1,0 +1,14 @@
+ul {
+    text-align: left;
+    color: red;
+    font-size: 12px;
+}
+
+.button {
+    text-align: center;
+}
+
+.caution {
+    font-size: 12px;
+    color: rgb(43, 41, 41);
+}

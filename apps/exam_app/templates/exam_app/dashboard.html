@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Trip Buddy Dashboard</title>
+    <style>
+        .container {
+            padding-top: 50px;
+        }
+
+        .header {
+            border-bottom: 1px solid black;
+            margin-bottom: 20px;
+        }
+
+        .link {
+            text-decoration: underline;
+        }
+
+        h5 {
+            margin-top: 50px;
+        }
+        .button{
+
+            margin: 50px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <div class="col">
+                <h4>Hello {{request.session.first_name}}!</h4>
+            </div>
+            <div class="col text-right">
+                <a href="/logout" class="link">Log Out</a>
+            </div>
+        </div>
+        <h5>Your trips:</h5>
+        <div class="trip_table">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Plan</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                {% for v in your_trips %}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ v.id }}</th>
+                        <td><a href="/trips/{{v.id}}" class="link">{{v.destination }}</a></td>
+                        <td>{{ v.start_date}}</td>
+                        <td>{{ v.end_date }}</td>
+                        <td>{{ v.plan }}</td>
+                        {% if v.users_created.email_address == request.session.email %}
+                        <td><a href="/remove/{{v.id}}" class="link">Remove</a>
+                            <a href="/trips/edit/{{v.id}}" class="link">Edit</a>
+                        </td>
+                        {% else %}
+                        <td><a href="/move/{{v.id}}" class="link">Cancel</a></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="other_trips">
+            <h5>Other people's trips:</h5>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Plan</th>
+                        <th scope="col">Want to join?</th>
+                    </tr>
+                </thead>
+                {% for x in other_trips %}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ x.id }}</th>
+                        <td><a href="/trips/{{x.id}}" class="link">{{x.destination }}</a></td>
+                        <td>{{ x.start_date }}</td>
+                        <td>{{ x.end_date }}</td>
+                        <td>{{ x.plan }}</td>
+                        <td><a href="/join/{{x.id}}" class="link">Join</a>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="row button">
+            <a class="btn btn-success" href="/trips/new" role="button">Create a new trip!</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

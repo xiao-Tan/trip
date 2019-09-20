@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>View trip</title>
+    <style>
+        .container {
+            padding-top: 50px;
+        }
+
+        .header {
+            border-bottom: 1px solid black;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+
+        .trip_show {
+            border: 1px solid black;
+            margin-bottom: 20px;
+            padding: 20px;
+            margin-right:50px;
+        }
+        h5{
+            color:red;
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <div class="col">
+                <h4>Hello {{request.session.first_name}}! Read about this trip!</h4>
+            </div>
+            <div class="col text-right">
+                <a href="/go_back">Dashboard</a>
+                <a href="/logout">Log Out</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col trip_show">
+                <h5>Destination: {{destination}}</h5>
+                <p>Start Date: {{start_date}}</p>
+                <p>End Date: {{end_date}}</p>
+                <p>Created On: {{created_at}}</p>
+                <p>Last updated: {{updated_at}}</p>
+                <p>Plan: {{plan}}</p>
+                <p>Created by: {{users_created}}</p>
+            </div>
+            <div class="col people_join">
+                <h5>People who've joined the trip:</h5>
+                <ul>
+                    {% for v in users_join %}
+                        {% if v.id != user_create %}
+                            <li>{{v.first_name}} {{v.last_name}}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
